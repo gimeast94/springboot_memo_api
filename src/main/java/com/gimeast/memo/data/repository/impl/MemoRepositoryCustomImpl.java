@@ -16,7 +16,7 @@ public class MemoRepositoryCustomImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
-    public List<MemoEntity> getMemoByContent(String content) {
+    public List<MemoEntity> findByContent(String content) {
         QMemoEntity qMemoEntity = QMemoEntity.memoEntity;
 
         List<MemoEntity> memoEntityList = from(qMemoEntity)

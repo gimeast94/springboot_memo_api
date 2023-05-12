@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,9 +29,10 @@ public class MemoServiceTest {
     }
 
     @Test
+    @Rollback(value = false)
     void 메모_저장() {
         MemoDto memoDto = MemoDto.builder()
-                .content("메모 저장 테스트 입니다.")
+                .content("메모 저장 테스트 입니다3.")
                 .build();
 
         MemoResponseDto result = memoService.save(memoDto);
@@ -104,7 +106,7 @@ public class MemoServiceTest {
 
         MemoResponseDto saveResult3 = memoService.save(memoDto3);
 
-        List<MemoResponseDto> result = memoService.getMemoByContent("");
+        List<MemoResponseDto> result = memoService.findByContent("");
 
         assertThat(result.get(0).getContent()).isEqualTo(memoDto3.getContent());
         assertThat(result.get(1).getContent()).isEqualTo(memoDto2.getContent());

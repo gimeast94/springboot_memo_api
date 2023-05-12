@@ -46,8 +46,8 @@ public class MemoController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<MemoResponseDto>> getMemoByContent(String content) {
-        List<MemoResponseDto> result = memoService.getMemoByContent(content);
+    public ResponseEntity<List<MemoResponseDto>> findByContent(String content) {
+        List<MemoResponseDto> result = memoService.findByContent(content);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

@@ -40,6 +40,6 @@ public interface MemoService {
      * @param content
      * @return List<MemoResponseDto>
      */
-    List<MemoResponseDto> getMemoByContent(String content);
+    List<MemoResponseDto> findByContent(String content);
 
 }

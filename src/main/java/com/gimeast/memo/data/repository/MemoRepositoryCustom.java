@@ -7,5 +7,5 @@ import com.gimeast.memo.data.entity.MemoEntity;
 import java.util.List;
 
 public interface MemoRepositoryCustom {
-    List<MemoEntity> getMemoByContent(String content);
+    List<MemoEntity> findByContent(String content);
 }

@@ -75,8 +75,8 @@ public class MemoServiceImpl implements MemoService {
 
 
     @Override
-    public List<MemoResponseDto> getMemoByContent(String content) {
-        List<MemoEntity> entityList = memoRepository.getMemoByContent(content);
+    public List<MemoResponseDto> findByContent(String content) {
+        List<MemoEntity> entityList = memoRepository.findByContent(content);
 
         List<MemoResponseDto> result = entityList.stream()
                 .map(o -> new MemoResponseDto(o))
