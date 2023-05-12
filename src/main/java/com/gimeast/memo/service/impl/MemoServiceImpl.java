@@ -38,7 +38,7 @@ public class MemoServiceImpl implements MemoService {
 
 
     @Override
-    public MemoResponseDto getMemoById(Long id) {
+    public MemoResponseDto findById(Long id) {
         MemoEntity entity = memoRepository.getReferenceById(id);
 
         MemoResponseDto result = MemoResponseDto.builder()

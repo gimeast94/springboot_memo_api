@@ -29,7 +29,6 @@ public class MemoServiceTest {
     }
 
     @Test
-    @Rollback(value = false)
     void 메모_저장() {
         MemoDto memoDto = MemoDto.builder()
                 .content("메모 저장 테스트 입니다3.")
@@ -50,7 +49,7 @@ public class MemoServiceTest {
 
         MemoResponseDto saveResult = memoService.save(memoDto);
 
-        MemoResponseDto result = memoService.getMemoById(saveResult.getId());
+        MemoResponseDto result = memoService.findById(saveResult.getId());
         assertThat(result.getContent()).isEqualTo(memoDto.getContent());
 
         LOGGER.info("result:" + result);
@@ -80,7 +79,7 @@ public class MemoServiceTest {
 
         memoService.deleteMemoById(saveResult.getId());
 
-        MemoResponseDto result = memoService.getMemoById(saveResult.getId());
+        MemoResponseDto result = memoService.findById(saveResult.getId());
 
         assertThat(result.isDeleteYn()).isNotEqualTo(memoDto.isDeleteYn());
         LOGGER.info("result:" + result);

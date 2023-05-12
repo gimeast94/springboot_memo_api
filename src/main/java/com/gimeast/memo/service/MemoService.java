@@ -19,7 +19,7 @@ public interface MemoService {
      * @param id
      * @return MemoResponseDto
      */
-    MemoResponseDto getMemoById(Long id);
+    MemoResponseDto findById(Long id);
 
     /**
      * 메모내용 수정

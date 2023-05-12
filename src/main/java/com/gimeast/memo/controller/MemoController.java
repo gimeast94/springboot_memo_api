@@ -28,8 +28,8 @@ public class MemoController {
     }
 
     @GetMapping
-    public ResponseEntity<MemoResponseDto> getMemoById(Long id) {
-        MemoResponseDto result = memoService.getMemoById(id);
+    public ResponseEntity<MemoResponseDto> findById(Long id) {
+        MemoResponseDto result = memoService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
