@@ -6,12 +6,12 @@ import com.gimeast.memo.data.entity.MemoEntity;
 import com.gimeast.memo.data.repository.MemoRepository;
 import com.gimeast.memo.service.MemoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+@Transactional
 public class MemoServiceImpl implements MemoService {
 
     private final MemoRepository memoRepository;
@@ -36,7 +36,7 @@ public class MemoServiceImpl implements MemoService {
         return result;
     }
 
-
+    @Transactional(readOnly = true)
     @Override
     public MemoResponseDto findById(Long id) {
         MemoEntity entity = memoRepository.getReferenceById(id);
@@ -54,12 +54,9 @@ public class MemoServiceImpl implements MemoService {
         MemoEntity entity = memoRepository.getReferenceById(id);
         entity.updateContent(content);
 
-        MemoEntity changeEntity = memoRepository.save(entity);
-
         MemoResponseDto result = MemoResponseDto.builder()
-                .id(changeEntity.getId()).content(changeEntity.getContent())
-                .createDt(changeEntity.getCreateDt()).deleteDt(changeEntity.getDeleteDt()).build();
-
+                .id(entity.getId()).content(entity.getContent())
+                .createDt(entity.getCreateDt()).deleteDt(entity.getDeleteDt()).build();
         return result;
     }
 
@@ -69,11 +66,10 @@ public class MemoServiceImpl implements MemoService {
 //        memoRepository.deleteById(id); // 실제 데이터 삭제는 하면안됨
         MemoEntity entity = memoRepository.getReferenceById(id);
         entity.updateDeleteYn(true);
-
-        memoRepository.save(entity);
     }
 
 
+    @Transactional(readOnly = true)
     @Override
     public List<MemoResponseDto> findByContent(String content) {
         List<MemoEntity> entityList = memoRepository.findByContent(content);
