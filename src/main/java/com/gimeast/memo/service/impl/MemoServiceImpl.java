@@ -25,13 +25,18 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public MemoResponseDto save(MemoDto memoDto) {
         MemoEntity memo = MemoEntity.builder()
-                .content(memoDto.getContent()).isDeleteYn(false).build();
+                .content(memoDto.getContent())
+                .isDeleteYn(false)
+                .build();
 
         MemoEntity entity = memoRepository.save(memo);
 
         MemoResponseDto result = MemoResponseDto.builder()
-                .id(entity.getId()).content(entity.getContent())
-                .createDt(entity.getCreateDt()).deleteDt(entity.getDeleteDt()).build();
+                .id(entity.getId())
+                .content(entity.getContent())
+                .createDt(entity.getCreateDt())
+                .deleteDt(entity.getDeleteDt())
+                .build();
 
         return result;
     }
@@ -39,24 +44,30 @@ public class MemoServiceImpl implements MemoService {
     @Transactional(readOnly = true)
     @Override
     public MemoResponseDto findById(Long id) {
-        MemoEntity entity = memoRepository.getReferenceById(id);
+        MemoEntity entity = memoRepository.findById(id).orElse(null);
 
         MemoResponseDto result = MemoResponseDto.builder()
-                .id(entity.getId()).content(entity.getContent())
-                .createDt(entity.getCreateDt()).deleteDt(entity.getDeleteDt())
-                .isDeleteYn(entity.isDeleteYn()).build();
+                .id(entity.getId())
+                .content(entity.getContent())
+                .createDt(entity.getCreateDt())
+                .deleteDt(entity.getDeleteDt())
+                .isDeleteYn(entity.isDeleteYn())
+                .build();
         return result;
     }
 
 
     @Override
     public MemoResponseDto changeMemoContent(Long id, String content) {
-        MemoEntity entity = memoRepository.getReferenceById(id);
+        MemoEntity entity = memoRepository.findById(id).orElse(null);
         entity.updateContent(content);
 
         MemoResponseDto result = MemoResponseDto.builder()
-                .id(entity.getId()).content(entity.getContent())
-                .createDt(entity.getCreateDt()).deleteDt(entity.getDeleteDt()).build();
+                .id(entity.getId())
+                .content(entity.getContent())
+                .createDt(entity.getCreateDt())
+                .deleteDt(entity.getDeleteDt())
+                .build();
         return result;
     }
 
@@ -64,7 +75,7 @@ public class MemoServiceImpl implements MemoService {
     @Override
     public void deleteMemoById(Long id) {
 //        memoRepository.deleteById(id); // 실제 데이터 삭제는 하면안됨
-        MemoEntity entity = memoRepository.getReferenceById(id);
+        MemoEntity entity = memoRepository.findById(id).orElse(null);
         entity.updateDeleteYn(true);
     }
 
